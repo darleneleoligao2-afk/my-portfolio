@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Darla - Creative Technologist</title>
+  <style>
+    :root {
+      --bg: #0b0c10;
+      --panel: #11151c;
+      --accent: #5ff0d0;
+      --text: #e9eef2;
+      --muted: #9aa5b1;
+      --grad: linear-gradient(135deg, #5ff0d0, #8f7dff);
+      --mono: "SFMono-Regular", "JetBrains Mono", Consolas, "Liberation Mono", monospace;
+      --sans: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      background: radial-gradient(circle at 20% 20%, rgba(95,240,208,0.1), transparent 35%),
+                  radial-gradient(circle at 80% 0%, rgba(143,125,255,0.14), transparent 35%),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(11,12,16,0.8);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    nav {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .logo {
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .pill {
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      padding: 8px 12px;
+      border-radius: 10px;
+      transition: background 0.2s ease;
+      color: var(--text);
+    }
+    .nav-links a:hover { background: rgba(255,255,255,0.06); }
+
+    .hero {
+      max-width: 1100px;
+      margin: 72px auto 48px;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+      align-items: center;
+    }
+    .hero-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: 0 18px 60px rgba(0,0,0,0.35);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 20% 20%, rgba(95,240,208,0.18), transparent 35%),
+                  radial-gradient(circle at 80% 0%, rgba(143,125,255,0.18), transparent 40%);
+      pointer-events: none;
+    }
+    h1 {
+      font-size: clamp(32px, 4vw, 46px);
+      margin: 0 0 12px;
+    }
+    .subtitle { color: var(--muted); margin-bottom: 16px; }
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--grad);
+      color: #0b0c10;
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-weight: 700;
+      box-shadow: 0 10px 30px rgba(95,240,208,0.32);
+      border: none;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.2s ease;
+    }
+    .cta:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(95,240,208,0.4); }
+    .chip-row { display: flex; gap: 10px; flex-wrap: wrap; margin: 18px 0 0; }
+    .chip { padding: 8px 12px; border-radius: 999px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); font-size: 13px; color: var(--text); }
+    .portrait-wrap {
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: radial-gradient(circle at 30% 30%, rgba(95,240,208,0.18), transparent 50%),
+                  radial-gradient(circle at 70% 10%, rgba(143,125,255,0.16), transparent 50%),
+                  #0f1219;
+      box-shadow: 0 18px 60px rgba(0,0,0,0.35);
+      aspect-ratio: 4 / 5;
+    }
+    .portrait {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(1.05);
+      display: block;
+    }
+    .corner-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: var(--grad);
+      color: #0b0c10;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      box-shadow: 0 10px 30px rgba(95,240,208,0.32);
+    }
+    .photo-card .meta { margin-top: 12px; }
+
+    section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 24px 8px;
+    }
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-size: 14px;
+      margin: 0 0 12px;
+    }
+    .panel {
+      background: var(--panel);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 14px 40px rgba(0,0,0,0.3);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+    }
+    .card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px;
+      padding: 18px;
+      transition: border 0.2s ease, transform 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .card:hover { border-color: rgba(95,240,208,0.5); transform: translateY(-2px); }
+    .tag { display: inline-block; font-family: var(--mono); font-size: 12px; color: var(--accent); margin-bottom: 6px; }
+    .card h3 { margin: 4px 0 8px; }
+    .meta { color: var(--muted); font-size: 14px; }
+
+    .timeline {
+      position: relative;
+      padding-left: 18px;
+      border-left: 1px dashed rgba(255,255,255,0.1);
+      display: grid;
+      gap: 18px;
+    }
+    .timeline-item {
+      position: relative;
+      padding-left: 14px;
+    }
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -9px;
+      top: 6px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--grad);
+      box-shadow: 0 0 0 5px rgba(95,240,208,0.1);
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 32px 16px 48px;
+      font-size: 14px;
+    }
+    .social {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin: 12px 0 16px;
+    }
+    .social a { padding: 10px 12px; border-radius: 10px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); }
+
+    @media (max-width: 640px) {
+      nav { padding: 14px 16px; }
+      .hero { margin-top: 48px; }
+      header { position: sticky; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">Darlene L. Leoligao</div>
+      <div class="nav-links">
+        <a href="#work">Work</a>
+        <a href="#skills">Skills</a>
+        <a href="#about">About</a>
+        <span class="pill">Available for select projects →</span>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-card">
+        <h1>Creative Technologist turning curious ideas into polished products.</h1>
+        <p class="subtitle">I blend design thinking with resilient engineering—crafting fast, reliable, and delightful experiences across web and product ecosystems.</p>
+        <button class="cta" onclick="document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });">Let&apos;s talk</button>
+        <div class="chip-row">
+          <span class="chip">Product strategy</span>
+          <span class="chip">Full-stack web</span>
+          <span class="chip">Design systems</span>
+          <span class="chip">Prototyping</span>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="tag">// signal</div>
+        <h3>Operating style</h3>
+        <p class="meta">Systems thinker • Rapid iteration • Opinionated on craft • Obsessed with measurable outcomes</p>
+        <div class="chip-row">
+          <span class="chip">Frontend: React, Svelte, Web Components</span>
+          <span class="chip">Backend: Node, Python, serverless</span>
+          <span class="chip">Tooling: CI/CD, observability, DX</span>
+        </div>
+      </div>
+      <div class="hero-card photo-card">
+        <div class="tag">// portrait</div>
+        <div class="portrait-wrap">
+          <img src="https://scontent.fceb1-3.fna.fbcdn.net/v/t39.30808-6/481448432_2099582420499566_4159049586620295929_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeHqVwHQ7wNR1tejC_HNr8gVh5t-XkeS-bKHm35eR5L5sn3DW0jIJJISqYBzK4mF0fWAJzuUthKFpJ_0UuP1-mQA&_nc_ohc=OjQV1k-yBnMQ7kNvwH7nJ2y&_nc_oc=Adnr3iAci1XEtNfxEc_zSF6T-THMy18_OBziX1-Y4Z4Thz6VmvORthgOltUbT90Eubs&_nc_zt=23&_nc_ht=scontent.fceb1-3.fna&_nc_gid=Kxqnn4VCvPPTESC4aVP21A&oh=00_Afn9QxdMUav6789yyWIzdT4l8lJMF-qT8lGGb18jEqrdJw&oe=6941CEB8" alt="Portrait of Darla looking ahead" class="portrait">
+          <div class="corner-badge">Hello!</div>
+        </div>
+        <p class="meta">Swap this photo with your own by replacing the src above.</p>
+      </div>
+    </section>
+
+    <section id="work">
+      <div class="section-title">
+        <span class="tag">Work Samples</span>
+        <div class="pill">Selected highlights</div>
+      </div>
+      <div class="grid">
+        <article class="card">
+          <span class="tag">// 01</span>
+          <h3>Realtime Collaboration Suite</h3>
+          <p>Designed and shipped a multiplayer canvas with CRDT-based syncing, achieving sub-100ms interactions at scale.</p>
+          <p class="meta">Role: Lead engineer • Tech: React, WebRTC, ProseMirror, Rust services</p>
+        </article>
+        <article class="card">
+          <span class="tag">// 02</span>
+          <h3>Design System Accelerator</h3>
+          <p>Built an accessible, themeable component library powering 5+ products with shared tokens and CI visual diffs.</p>
+          <p class="meta">Role: Tech lead • Tech: TypeScript, Storybook, Figma tokens</p>
+        </article>
+        <article class="card">
+          <span class="tag">// 03</span>
+          <h3>Insightful Analytics</h3>
+          <p>Implemented privacy-first analytics and anomaly detection that cut investigation time by 40% for ops teams.</p>
+          <p class="meta">Role: IC • Tech: Next.js, Python, dbt, BigQuery</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="section-title">
+        <span class="tag">Capabilities</span>
+        <div class="pill">Craft + delivery</div>
+      </div>
+      <div class="grid">
+        <article class="card">
+          <h3>Product engineering</h3>
+          <p class="meta">Shape → prototype → ship → learn. Balanced decisions through user outcomes and operational simplicity.</p>
+          <div class="chip-row">
+            <span class="chip">Architecture docs</span>
+            <span class="chip">MVP scoping</span>
+            <span class="chip">Experimentation</span>
+          </div>
+        </article>
+        <article class="card">
+          <h3>Interface craft</h3>
+          <p class="meta">Interfaces with clarity, motion, and polish. Accessibility-first with pragmatic performance budgets.</p>
+          <div class="chip-row">
+            <span class="chip">Design systems</span>
+            <span class="chip">Micro-interactions</span>
+            <span class="chip">A11y standards</span>
+          </div>
+        </article>
+        <article class="card">
+          <h3>Operational rigor</h3>
+          <p class="meta">Instrumentation and resilience baked in. Build pipelines that keep teams fast and calm.</p>
+          <div class="chip-row">
+            <span class="chip">CI/CD</span>
+            <span class="chip">Observability</span>
+            <span class="chip">Runbooks</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="section-title">
+        <span class="tag">About</span>
+        <div class="pill">Backstory</div>
+      </div>
+      <div class="panel">
+        <p>I&apos;m Darla, a creative technologist fascinated by the edges where design, data, and systems thinking overlap. I love mentoring teams, building design systems that last, and shipping thoughtful products people rely on daily.</p>
+        <div class="timeline">
+          <div class="timeline-item">
+            <strong>Now</strong> — Independent product engineer partnering with founders and design teams.
+          </div>
+          <div class="timeline-item">
+            <strong>Prior</strong> — Led a platform team modernizing tooling and observability for a 30+ engineer org.
+          </div>
+          <div class="timeline-item">
+            <strong>Earlier</strong> — Built data-rich interfaces across fintech and creative tools.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="section-title">
+        <span class="tag">Contact</span>
+        <div class="pill">Let&apos;s build</div>
+      </div>
+      <div class="panel">
+        <p>Ready to collaborate? I take on a handful of thoughtful projects each quarter.</p>
+        <div class="chip-row">
+          <span class="chip">Email: darleneleoligao02@gmail.com</span>
+          <span class="chip">Contact: 09261526400</span>
+          <span class="chip">Facebook: Darlene Leoligao</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="social">
+      <a href="#">LinkedIn</a>
+      <a href="#">GitHub</a>
+      <a href="#">Dribbble</a>
+    </div>
+    <div>Crafted with care · Let&apos;s make something remarkable together.</div>
+  </footer>
+</body>
+</html>
+
